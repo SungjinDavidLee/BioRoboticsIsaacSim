@@ -2,18 +2,34 @@
 
 **Simulation part of the precision bio-lab tube insertion task** · Franka FR3 · FAIRINO FR5
 
-[한국어](README.md) · Detailed implementation and code: [BioTube-Insertion-VLA-IsaacLab](https://github.com/bbiyak12e/BioTube-Insertion-VLA-IsaacLab)
+[한국어](README.md) · [Contents](#contents)
 
 ![Scripted demonstrations of the same scene performed by FR3 (left) and FR5 (right) — third-person camera, 4× speed](reports/01_sim_env_autodemo/figures/demo_pair_third_4x.gif)
 
 Paired demonstrations of the same scene (1103-27), each performed by one robot with its own workcell cameras. 1× video: [demo_pair_scene27.mp4](reports/01_sim_env_autodemo/figures/demo_pair_scene27.mp4)
 
 > **Latest news**
+> - 2026-11-03 · Added [Real setup → digital twin](docs/real_to_twin/README_EN.md) · FR3 finished collecting 100 demonstrations
 > - 2026-11-02 · Started collecting 100 FR3 · FR5 paired demonstrations with the scripted demo collector
 > - 2026-11-02 · GR00T N1.7 installed
 > - 2026-11-02 · [Report 1 — Building the sim environment and collecting scripted demonstration data](reports/01_sim_env_autodemo/README_EN.md)
 
 ---
+
+## Contents
+
+1. **Overview · task · setup · progress** — this page [1](#1-overview) · [2](#2-task) · [3](#3-sim-experiment-setup-replicating-the-real-setup) · [4](#4-progress-updated)
+2. **[Real setup → digital twin](docs/real_to_twin/README_EN.md)** — from measurements to shapes, image regions (segments), camera fitting, comparison with colour segments
+   - [Real stations and camera frames](docs/real_to_twin/README_EN.md#2-real-stations-and-camera-frames) · [Object measurements](docs/real_to_twin/README_EN.md#3-objects--from-measurements-to-shapes) · [Image regions → scene layout](docs/real_to_twin/README_EN.md#4-image-regions-segments--scene-layout) · [Camera fitting](docs/real_to_twin/README_EN.md#5-picked-points--camera-fitting) · [Colour-segment comparison](docs/real_to_twin/README_EN.md#6-comparing-with-colour-segments) · [Remaining differences](docs/real_to_twin/README_EN.md#7-remaining-differences-and-how-they-are-handled)
+3. **Digital twin pipeline and equations** — Report 1 [section 3-1](reports/01_sim_env_autodemo/README_EN.md#3-1-digital-twin-pipeline) · [chapter 4](reports/01_sim_env_autodemo/README_EN.md#4-equations-and-application--digital-twin)
+4. **Domain randomization (Isaac Lab)** — Report 1 [section 3-2](reports/01_sim_env_autodemo/README_EN.md#3-2-domain-randomization) · [chapter 5](reports/01_sim_env_autodemo/README_EN.md#5-equations-and-application--domain-randomization)
+5. **Scripted demo collector (BioTube-AutoDemo-IsaacLab)** — Report 1 [section 3-3](reports/01_sim_env_autodemo/README_EN.md#3-3-scripted-demo-collector-pipeline) · [section 3-4 per-robot differences](reports/01_sim_env_autodemo/README_EN.md#3-4-per-robot-differences) · [chapter 6](reports/01_sim_env_autodemo/README_EN.md#6-equations-and-application--scripted-demo-generation-and-success-check)
+6. **Dataset · collection results · failure analysis** — this page [6](#6-dataset-updated) · Report 1 [chapter 7 data format](reports/01_sim_env_autodemo/README_EN.md#7-data-format-and-records) · [chapter 8 results](reports/01_sim_env_autodemo/README_EN.md#8-collection-results-updated)
+7. **Scripted planner vs VLA comparison design · model plan** — Report 1 [chapter 9](reports/01_sim_env_autodemo/README_EN.md#9-comparison-experiment-design--scripted-model-based-planner-vs-vla-plan) · this page [7](#7-model-and-experiment-plan)
+8. **Demonstration videos** — Report 1 [appendix A](reports/01_sim_env_autodemo/README_EN.md#appendix-a-demonstration-videos)
+9. **Report list** — this page [9](#9-reports)
+
+Development history and code: [BioTube-Insertion-VLA-IsaacLab](https://github.com/bbiyak12e/BioTube-Insertion-VLA-IsaacLab) (personal repository)
 
 ## 1. Overview
 

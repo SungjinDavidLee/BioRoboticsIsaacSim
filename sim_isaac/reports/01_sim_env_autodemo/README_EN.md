@@ -622,7 +622,7 @@ The FR3 demonstration was saved from the second attempt of that scene (a retry a
 
 ## Appendix B. Code locations
 
-Detailed implementation: [BioTube-Insertion-VLA-IsaacLab](https://github.com/bbiyak12e/BioTube-Insertion-VLA-IsaacLab)
+Paths are relative to the project folder `Medical_bio_experiment/`. The real-setup → digital-twin process is documented [in this repository](../../docs/real_to_twin/README_EN.md) (development history: [personal repository](https://github.com/bbiyak12e/BioTube-Insertion-VLA-IsaacLab)).
 
 | Content | File |
 |---|---|

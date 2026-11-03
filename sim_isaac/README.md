@@ -2,18 +2,34 @@
 
 **바이오 실험 튜브 정밀 삽입 과제의 시뮬레이션 파트** · Franka FR3 · FAIRINO FR5
 
-[English](README_EN.md) · 자세한 구현과 코드: [BioTube-Insertion-VLA-IsaacLab](https://github.com/bbiyak12e/BioTube-Insertion-VLA-IsaacLab)
+[English](README_EN.md) · [목차](#목차)
 
 ![같은 장면을 FR3(왼쪽) · FR5(오른쪽)가 각각 수행한 자동 시연 — 3인칭 카메라, 4배속](reports/01_sim_env_autodemo/figures/demo_pair_third_4x.gif)
 
 같은 장면(1103-27)을 두 로봇이 각자의 실험대 카메라로 수행한 짝 시연입니다. 1배속 영상: [demo_pair_scene27.mp4](reports/01_sim_env_autodemo/figures/demo_pair_scene27.mp4)
 
 > **최근 소식**
+> - 2026-11-03 · [실물 환경 → 디지털 트윈](docs/real_to_twin/README.md) 문서 추가 · FR3 시연 100개 수집 끝
 > - 2026-11-02 · 자동 시연 수집기로 FR3 · FR5 짝 시연 100개 수집 시작
 > - 2026-11-02 · GR00T N1.7 설치 완료
 > - 2026-11-02 · [보고서 1 — 시뮬 환경 구축과 자동 시연 데이터 수집](reports/01_sim_env_autodemo/README.md)
 
 ---
+
+## 목차
+
+1. **개요 · 과제 · 실험 구성 · 진행 상태** — 이 페이지 [1장](#1-개요) · [2장](#2-과제) · [3장](#3-시뮬-실험-구성-실물-재현) · [4장](#4-진행-상태-갱신)
+2. **[실물 환경 → 디지털 트윈](docs/real_to_twin/README.md)** — 실측에서 모양으로, 실물 화면 영역(세그먼트) 따기, 카메라 맞추기, 색 세그먼트로 실물과 비교
+   - [실물 실험대와 카메라 화면](docs/real_to_twin/README.md#2-실물-실험대와-카메라-화면) · [물체 실측](docs/real_to_twin/README.md#3-물체--실측에서-모양으로) · [화면 영역 → 장면 배치](docs/real_to_twin/README.md#4-화면-영역세그먼트-따기--장면-배치) · [카메라 맞추기](docs/real_to_twin/README.md#5-점-찍기--카메라-맞추기) · [색 세그먼트로 비교](docs/real_to_twin/README.md#6-색으로-딴-세그먼트로-실물과-비교) · [남은 차이](docs/real_to_twin/README.md#7-남은-차이와-대응)
+3. **디지털 트윈 파이프라인과 수식** — 보고서 1 [3-1절 파이프라인](reports/01_sim_env_autodemo/README.md#3-1-디지털-트윈-파이프라인) · [4장 수식과 적용](reports/01_sim_env_autodemo/README.md#4-수식과-적용--디지털-트윈)
+4. **도메인 랜덤화 (Isaac Lab)** — 보고서 1 [3-2절](reports/01_sim_env_autodemo/README.md#3-2-도메인-랜덤화) · [5장 수식과 적용](reports/01_sim_env_autodemo/README.md#5-수식과-적용--도메인-랜덤화)
+5. **자동 시연 수집기 (BioTube-AutoDemo-IsaacLab)** — 보고서 1 [3-3절 파이프라인](reports/01_sim_env_autodemo/README.md#3-3-자동-시연-수집기-파이프라인) · [3-4절 로봇별 차이](reports/01_sim_env_autodemo/README.md#3-4-로봇별-차이) · [6장 수식과 적용](reports/01_sim_env_autodemo/README.md#6-수식과-적용--자동-시연-생성과-판정)
+6. **데이터셋 · 수집 결과 · 실패 분석** — 이 페이지 [6장](#6-데이터셋-갱신) · 보고서 1 [7장 데이터 형식](reports/01_sim_env_autodemo/README.md#7-데이터-형식과-기록) · [8장 수집 결과](reports/01_sim_env_autodemo/README.md#8-수집-결과-갱신)
+7. **수학 모델 vs VLA 비교 설계 · 모델 계획** — 보고서 1 [9장](reports/01_sim_env_autodemo/README.md#9-비교-실험-설계--수학-모델-vs-vla-계획) · 이 페이지 [7장](#7-모델과-실험-계획)
+8. **시연 영상** — 보고서 1 [부록 A](reports/01_sim_env_autodemo/README.md#부록-a-시연-영상)
+9. **보고서 목록** — 이 페이지 [9장](#9-보고서)
+
+개발 기록 · 코드 이력: [BioTube-Insertion-VLA-IsaacLab](https://github.com/bbiyak12e/BioTube-Insertion-VLA-IsaacLab) (개인 레포)
 
 ## 1. 개요
 
@@ -38,7 +54,7 @@
 | 항목 | 시뮬 |
 |---|---|
 | 로봇 | Franka FR3 + Franka Hand, FAIRINO FR5 + DH-Robotics AG-95. 두 로봇의 손끝 기준점(TCP)을 같은 정의로 맞춤 |
-| 카메라 | 3인칭 + 손목, 640×360, 30 fps. 실물 화면의 점을 재투영 오차 최소제곱으로 풀어 자리 · 각도를 맞춤 (3인칭 오차 2~4 px) |
+| 카메라 | 3인칭 + 손목, 640×360, 30 fps. 실물 화면의 점을 재투영 오차 최소제곱으로 풀어 자리 · 각도를 맞춤 (3인칭 오차 2\~4 px) |
 | 물체 | 실측으로 만든 50 mL 튜브(물 48 mL, 51 g) · 4구 Rack(165×40×51 mm) · 빨간 링(실물 STL) |
 | 실험대 | FR3 · FR5 실험대마다 책상 · 받침대 · 벽 · 시작 자세를 따로 재현 |
 | 소프트웨어 | Isaac Sim 6.0.1, Isaac Lab 3.0 (v3.0.0-beta2.patch1) |
@@ -49,11 +65,11 @@
 
 | 단계 | 상태 | 시기 |
 |---|---|---|
-| 실측 에셋 (튜브 · Rack · 링) | ✅ 완료 | 10-26 ~ 11-02 |
-| 디지털 트윈 (FR3 · FR5 실험대) | ✅ 완료 | 10-27 ~ 10-29 |
-| Isaac Lab 도메인 랜덤화 | ✅ 완료 | 10-28 ~ 10-31 |
-| 자동 시연 수집기 | ✅ 완료 | 10-31 ~ 11-02 |
-| FR3 · FR5 짝 시연 100개 | 🔄 진행 중 | 11-02 ~ |
+| 실측 에셋 (튜브 · Rack · 링) | ✅ 완료 | 10-26 \~ 11-02 |
+| 디지털 트윈 (FR3 · FR5 실험대) | ✅ 완료 | 10-27 \~ 10-29 |
+| Isaac Lab 도메인 랜덤화 | ✅ 완료 | 10-28 \~ 10-31 |
+| 자동 시연 수집기 | ✅ 완료 | 10-31 \~ 11-02 |
+| FR3 · FR5 짝 시연 100개 | 🔄 진행 중 | 11-02 \~ |
 | GR00T N1.7 제로샷 (시뮬) | ⬜ 예정 | |
 | GR00T N1.7 파인튜닝 · 로봇별 비교 | ⬜ 예정 | |
 | 실물 적용 (Sim-to-Real) | ⬜ 예정 | |
