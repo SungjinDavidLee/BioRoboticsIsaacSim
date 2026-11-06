@@ -10,7 +10,7 @@
 - In Isaac Lab, each scene randomizes the rack positions · orientations, the tube left-right order, the red-ring hole, and the lighting brightness · color, but **only layouts that both robots can reach and both cameras can see** are used.
 - We built a **scripted demo collector** that generates demonstrations by path planning, checks them, and saves only the successes. FR3 and FR5 each perform the same scene to produce **paired data**.
 - For insertion with 1 mm clearance, the in-hand tube pose is re-measured and the tube is **inserted along the tube axis**; success is judged by **the distance of the tube axis at the hole-collar height**.
-- Collection of 100 paired demonstrations is in progress; the numbers in Section 8 will be filled in when it finishes.
+- Collection of the 100 paired demonstrations finished on 11-03. The numbers (Sections 8-2 · 8-3) and the results of GR00T trained on that data are in [Report 2](../02_vla100_bench/README_EN.md).
 
 ## 1. Goals and scope
 
@@ -548,6 +548,8 @@ One sim step (1/30 s = 33.3 ms) takes about 0.25 s of wall-clock time, so the si
 
 ### 8-2. Final results (to be filled in once 100 are done)
 
+> **Update (2026-11-06):** filled in [Section 2-2 of Report 2](../02_vla100_bench/README_EN.md#2-2-results-sections-8-2--8-3-of-report-1). FR3 100 saved · 88 / 102 saved on the first attempt · 86 % per attempt, FR5 100 saved · 99 %, 99 pairs.
+
 | | Scenes attempted | Saved | First-attempt success rate | Success rate incl. retries | Given-up scenes | Demo length (sim) |
 |---|---|---|---|---|---|---|
 | FR3 | | | | | | |
@@ -558,6 +560,8 @@ One sim step (1/30 s = 33.3 ms) takes about 0.25 s of wall-clock time, so the si
 - **Success rate incl. retries** = saved ÷ (saved + discarded). This shows collection efficiency.
 
 ### 8-3. Failure analysis of the scripted collector (to be filled in once 100 are done)
+
+> **Update (2026-11-06):** [Section 2-2 of Report 2](../02_vla100_bench/README_EN.md#2-2-results-sections-8-2--8-3-of-report-1) — all 16 discarded FR3 attempts were "slipped out of the hand"; 5 planning failures (4 over 60 s · 1 not reachable by FR5).
 
 The scripted (model-based) planner is a **privileged-information baseline** that acts on the sim ground-truth state. Knowing how this baseline fails is necessary for interpreting the VLA results.
 
@@ -622,7 +626,7 @@ The FR3 demonstration was saved from the second attempt of that scene (a retry a
 
 ## Appendix B. Code locations
 
-Paths are relative to the project folder `Medical_bio_experiment/`. The real-setup → digital-twin process is documented [in this repository](../../docs/real_to_twin/README_EN.md) (development history: [personal repository](https://github.com/bbiyak12e/BioTube-Insertion-VLA-IsaacLab)).
+Detailed implementation: [BioTube-Insertion-VLA-IsaacLab](https://github.com/bbiyak12e/BioTube-Insertion-VLA-IsaacLab)
 
 | Content | File |
 |---|---|

@@ -2,34 +2,21 @@
 
 **Simulation part of the precision bio-lab tube insertion task** · Franka FR3 · FAIRINO FR5
 
-[한국어](README.md) · [Contents](#contents)
+[한국어](README.md) · Detailed implementation and code: [BioTube-Insertion-VLA-IsaacLab](https://github.com/bbiyak12e/BioTube-Insertion-VLA-IsaacLab)
 
 ![Scripted demonstrations of the same scene performed by FR3 (left) and FR5 (right) — third-person camera, 4× speed](reports/01_sim_env_autodemo/figures/demo_pair_third_4x.gif)
 
 Paired demonstrations of the same scene (1103-27), each performed by one robot with its own workcell cameras. 1× video: [demo_pair_scene27.mp4](reports/01_sim_env_autodemo/figures/demo_pair_scene27.mp4)
 
 > **Latest news**
-> - 2026-11-03 · Added [Real setup → digital twin](docs/real_to_twin/README_EN.md) · FR3 finished collecting 100 demonstrations
+> - 2026-11-06 · [Report 2 — GR00T trained on 100 demos: benchmark results, data-collection mistakes, and how we will fix them](reports/02_vla100_bench/README_EN.md)
+> - 2026-11-04 · Fine-tuned GR00T N1.7 (100 demos each for FR3 · FR5) · benchmark on 50 unseen scenes
+> - 2026-11-03 · Finished collecting 100 FR3 · FR5 paired demonstrations
 > - 2026-11-02 · Started collecting 100 FR3 · FR5 paired demonstrations with the scripted demo collector
 > - 2026-11-02 · GR00T N1.7 installed
 > - 2026-11-02 · [Report 1 — Building the sim environment and collecting scripted demonstration data](reports/01_sim_env_autodemo/README_EN.md)
 
 ---
-
-## Contents
-
-1. **Overview · task · setup · progress** — this page [1](#1-overview) · [2](#2-task) · [3](#3-sim-experiment-setup-replicating-the-real-setup) · [4](#4-progress-updated)
-2. **[Real setup → digital twin](docs/real_to_twin/README_EN.md)** — from measurements to shapes, image regions (segments), camera fitting, comparison with colour segments
-   - [Real stations and camera frames](docs/real_to_twin/README_EN.md#2-real-stations-and-camera-frames) · [Object measurements](docs/real_to_twin/README_EN.md#3-objects--from-measurements-to-shapes) · [Image regions → scene layout](docs/real_to_twin/README_EN.md#4-image-regions-segments--scene-layout) · [Camera fitting](docs/real_to_twin/README_EN.md#5-picked-points--camera-fitting) · [Colour-segment comparison](docs/real_to_twin/README_EN.md#6-comparing-with-colour-segments) · [Remaining differences](docs/real_to_twin/README_EN.md#7-remaining-differences-and-how-they-are-handled)
-3. **Digital twin pipeline and equations** — Report 1 [section 3-1](reports/01_sim_env_autodemo/README_EN.md#3-1-digital-twin-pipeline) · [chapter 4](reports/01_sim_env_autodemo/README_EN.md#4-equations-and-application--digital-twin)
-4. **Domain randomization (Isaac Lab)** — Report 1 [section 3-2](reports/01_sim_env_autodemo/README_EN.md#3-2-domain-randomization) · [chapter 5](reports/01_sim_env_autodemo/README_EN.md#5-equations-and-application--domain-randomization)
-5. **Scripted demo collector (BioTube-AutoDemo-IsaacLab)** — Report 1 [section 3-3](reports/01_sim_env_autodemo/README_EN.md#3-3-scripted-demo-collector-pipeline) · [section 3-4 per-robot differences](reports/01_sim_env_autodemo/README_EN.md#3-4-per-robot-differences) · [chapter 6](reports/01_sim_env_autodemo/README_EN.md#6-equations-and-application--scripted-demo-generation-and-success-check)
-6. **Dataset · collection results · failure analysis** — this page [6](#6-dataset-updated) · Report 1 [chapter 7 data format](reports/01_sim_env_autodemo/README_EN.md#7-data-format-and-records) · [chapter 8 results](reports/01_sim_env_autodemo/README_EN.md#8-collection-results-updated)
-7. **Scripted planner vs VLA comparison design · model plan** — Report 1 [chapter 9](reports/01_sim_env_autodemo/README_EN.md#9-comparison-experiment-design--scripted-model-based-planner-vs-vla-plan) · this page [7](#7-model-and-experiment-plan)
-8. **Demonstration videos** — Report 1 [appendix A](reports/01_sim_env_autodemo/README_EN.md#appendix-a-demonstration-videos)
-9. **Report list** — this page [9](#9-reports)
-
-Development history and code: [BioTube-Insertion-VLA-IsaacLab](https://github.com/bbiyak12e/BioTube-Insertion-VLA-IsaacLab) (personal repository)
 
 ## 1. Overview
 
@@ -54,7 +41,7 @@ Development history and code: [BioTube-Insertion-VLA-IsaacLab](https://github.co
 | Item | Sim |
 |---|---|
 | Robots | Franka FR3 + Franka Hand, FAIRINO FR5 + DH-Robotics AG-95. The TCPs of both robots use the same definition |
-| Cameras | Third-person + wrist, 640×360, 30 fps. Position · angle fitted by least-squares minimization of the reprojection error of points in the real camera images (third-person error 2–4 px) |
+| Cameras | Third-person + wrist, 640×360, 30 fps. Position · angle fitted by least-squares minimization of the reprojection error of points in the real camera images (third-person error 2–4 px). The real data is 848×480 · 10 Hz — being matched ([Report 2](reports/02_vla100_bench/README_EN.md), Sections 4 · 5) |
 | Objects | 50 mL tube built from measurements (48 mL water, 51 g) · 4-hole rack (165×40×51 mm) · red ring (STL of the real part) |
 | Workcells | Table · pedestal · wall · start pose reproduced separately for each of the FR3 and FR5 workcells |
 | Software | Isaac Sim 6.0.1, Isaac Lab 3.0 (v3.0.0-beta2.patch1) |
@@ -69,9 +56,13 @@ Development history and code: [BioTube-Insertion-VLA-IsaacLab](https://github.co
 | Digital twin (FR3 · FR5 workcells) | ✅ Done | Oct 27 – Oct 29 |
 | Isaac Lab domain randomization | ✅ Done | Oct 28 – Oct 31 |
 | Scripted demo collector | ✅ Done | Oct 31 – Nov 2 |
-| 100 FR3 · FR5 paired demonstrations | 🔄 In progress | Nov 2 – |
-| GR00T N1.7 zero-shot (sim) | ⬜ Planned | |
-| GR00T N1.7 fine-tuning · per-robot comparison | ⬜ Planned | |
+| 100 FR3 · FR5 paired demonstrations | ✅ Done | Nov 2 – Nov 3 |
+| GR00T N1.7 fine-tuning (100 demos) · sim benchmark | ✅ Done — [Report 2](reports/02_vla100_bench/README_EN.md) | Nov 3 – Nov 5 |
+| GR00T N1.7 zero-shot (sim) | 🔄 2-scene trial only | Nov 3 |
+| More collection (200 A pairs · 300 B pairs) | 🔄 In progress (FR5 following B) | Nov 3 – |
+| Matching the real format (10 Hz · 848×480 · state · action definitions · exposure) · fixing the dome light | 🔄 In progress | Nov 5 – |
+| Retraining with format · number of demos · layout changed · per-robot comparison | 🔄 Two FR5 runs training | Nov 6 – |
+| Re-collection with the real settings (ab) | ⬜ Planned | |
 | Real-world deployment (Sim-to-Real) | ⬜ Planned | |
 
 ## 5. Simulation environment
@@ -119,30 +110,38 @@ The equations used and how they are applied are collected in Report 1, [Section 
 | Instruction | `put the red tube in the red slot` |
 | Pairing | The same scene (layout · lighting) is performed by FR3 and FR5 separately and linked by `pair_id` |
 
-Target: 100 pairs — collection in progress. The table below will be filled in when it finishes.
+First 100 pairs (Nov 2 – 3, base seed 1103, layout A):
 
-| | Saved | Discarded · given up | Success rate | Demo length (sim) |
+| | Saved | Discarded · given up | Success rate (per attempt) | Demo length (sim) |
 |---|---|---|---|---|
-| FR3 | | | | |
-| FR5 | | | | |
-| Pair (both saved) | | — | — | — |
+| FR3 | 100 | 16 discarded · 2 given up | 86 % | about 41 s |
+| FR5 | 100 | 1 discarded · 0 given up | 99 % (in-hand hold assist) | about 41 s |
+| Pair (both saved) | 99 | — | — | — |
+
+Since then we collected 200 more A pairs · 300 B pairs (FR5 still following B). The settings that differ from the real robots (30 Hz · 640×360 · state · action definitions · exposure) and the dome light that changed with each collector run are being fixed by conversion and re-collection — [Report 2](reports/02_vla100_bench/README_EN.md), Sections 4 · 5.
 
 ## 7. Model and experiment plan
 
-- **Model:** [GR00T N1.7](https://github.com/NVIDIA/Isaac-GR00T) (installed)
-- **Order:** ① sim zero-shot → ② fine-tuning on paired demonstrations → ③ compare training on FR3 only · FR5 only · both → ④ real-world deployment
-- **Input · output (draft):** 2 cameras + TCP state + gripper → relative TCP motion + gripper, in chunks of 16 steps
-- **Evaluation:** insertion success rate on random sim scenes (same success criterion as above)
+- **Model:** [GR00T N1.7](https://github.com/NVIDIA/Isaac-GR00T) base model (`nvidia/GR00T-N1.7-3B`, `NEW_EMBODIMENT`) — fine-tuned per robot
+- **Input · output:** 2 cameras + TCP state + gripper → relative TCP motion + gripper, in chunks of 16 steps (current data 30 Hz → 0.53 s, real format 10 Hz → 1.6 s)
+- **Evaluation:** the same 50 scenes not used for training (base seed 7700) · 10 training scenes, first attempt only, 95 % CI with every success rate. Same number of trials and the same lighting state for every model compared
+- **Order:** ① fine-tuning on 100 demos · benchmark (done) → ② retraining with format · number of demos · layout changed one at a time (in progress) → ③ per-robot comparison on data with the real settings (ab) → ④ real-world deployment
 
 ## 8. Results (updated)
 
-In preparation
+| | Training demos | Success on 50 unseen scenes | 95 % CI |
+|---|---|---|---|
+| FR3 | 100 | 2 / 50 (4 %) | 1.1–13.5 % |
+| FR5 | 100 | 1 / 50 (2 %) | 0.4–10.5 % |
+
+Real-robot models trained on 100 demos are similar (FR3 5 % · FR5 0 %; the real 200-demo model reaches 30 %). We suspect layout memorization instead of color, grasp precision, and a short action chunk.
+The FR3 benchmark was run under a lighting state different from its training data and will be re-measured. Details in [Report 2](reports/02_vla100_bench/README_EN.md).
 
 ## 9. Reports
 
 | No. | Content | Date | Link |
 |---|---|---|---|
 | 1 | Building the sim environment and collecting scripted demonstration data | 2026-11-02 | [한국어](reports/01_sim_env_autodemo/README.md) · [English](reports/01_sim_env_autodemo/README_EN.md) |
-| 2 | GR00T N1.7 zero-shot | Planned | |
-| 3 | Fine-tuning and per-robot comparison | Planned | |
+| 2 | GR00T trained on 100 demos: benchmark results, data-collection mistakes, and how we will fix them | 2026-11-06 | [한국어](reports/02_vla100_bench/README.md) · [English](reports/02_vla100_bench/README_EN.md) |
+| 3 | Real-format retraining · number of demos · layout comparison | Planned | |
 | 4 | Sim-to-Real | Planned | |
