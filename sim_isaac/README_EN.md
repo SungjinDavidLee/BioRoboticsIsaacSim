@@ -9,6 +9,7 @@
 Paired demonstrations of the same scene (1103-27), each performed by one robot with its own workcell cameras. 1× video: [demo_pair_scene27.mp4](reports/01_sim_env_autodemo/figures/demo_pair_scene27.mp4)
 
 > **Latest news**
+> - 2026-11-10 · [Report 3 — Paired demos re-collected with real-matched settings: math-model probability and precision, real-format conversion, comparison with real data](reports/03_realmatched_data/README_EN.md)
 > - 2026-11-06 · [Report 2 — GR00T trained on 100 demos: benchmark results, data-collection mistakes, and how we will fix them](reports/02_vla100_bench/README_EN.md)
 > - 2026-11-04 · Fine-tuned GR00T N1.7 (100 demos each for FR3 · FR5) · benchmark on 50 unseen scenes
 > - 2026-11-03 · Finished collecting 100 FR3 · FR5 paired demonstrations
