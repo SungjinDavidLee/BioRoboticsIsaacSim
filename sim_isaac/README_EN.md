@@ -9,6 +9,7 @@
 Paired demonstrations of the same scene (1103-27), each performed by one robot with its own workcell cameras. 1× video: [demo_pair_scene27.mp4](reports/01_sim_env_autodemo/figures/demo_pair_scene27.mp4)
 
 > **Latest news**
+> - 2026-11-16 · [Report 4 — Sim benchmark results: FR3 · FR5 VLA only · DAgger · formula finish](reports/04_sim_bench/README_EN.md) ([FR5](reports/04_sim_bench/fr5/README_EN.md) · [FR3](reports/04_sim_bench/fr3/README_EN.md))
 > - 2026-11-10 · [Report 3 — Paired demos re-collected with real-matched settings: math-model probability and precision, real-format conversion, comparison with real data](reports/03_realmatched_data/README_EN.md)
 > - 2026-11-06 · [Report 2 — GR00T trained on 100 demos: benchmark results, data-collection mistakes, and how we will fix them](reports/02_vla100_bench/README_EN.md)
 > - 2026-11-04 · Fine-tuned GR00T N1.7 (100 demos each for FR3 · FR5) · benchmark on 50 unseen scenes
@@ -144,5 +145,6 @@ The FR3 benchmark was run under a lighting state different from its training dat
 |---|---|---|---|
 | 1 | Building the sim environment and collecting scripted demonstration data | 2026-11-02 | [한국어](reports/01_sim_env_autodemo/README.md) · [English](reports/01_sim_env_autodemo/README_EN.md) |
 | 2 | GR00T trained on 100 demos: benchmark results, data-collection mistakes, and how we will fix them | 2026-11-06 | [한국어](reports/02_vla100_bench/README.md) · [English](reports/02_vla100_bench/README_EN.md) |
-| 3 | Real-format retraining · number of demos · layout comparison | Planned | |
-| 4 | Sim-to-Real | Planned | |
+| 3 | Paired demos re-collected with real-matched settings: math-model probability and precision, real-format conversion, comparison with real data | 2026-11-10 | [한국어](reports/03_realmatched_data/README.md) · [English](reports/03_realmatched_data/README_EN.md) |
+| 4 | Sim benchmark results — FR3 · FR5 VLA only · DAgger · formula finish | 2026-11-16 | [Overview](reports/04_sim_bench/README_EN.md) · [FR5](reports/04_sim_bench/fr5/README_EN.md) · [FR3](reports/04_sim_bench/fr3/README_EN.md) · [한국어](reports/04_sim_bench/README.md) |
+| 5 | Sim-to-Real | Planned | |

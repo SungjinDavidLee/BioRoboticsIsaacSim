@@ -9,6 +9,7 @@
 같은 장면(1103-27)을 두 로봇이 각자의 실험대 카메라로 수행한 짝 시연입니다. 1배속 영상: [demo_pair_scene27.mp4](reports/01_sim_env_autodemo/figures/demo_pair_scene27.mp4)
 
 > **최근 소식**
+> - 2026-11-16 · [보고서 4 — 시뮬 벤치 결과: FR3 · FR5 VLA 단독 · DAgger · 수식 마무리](reports/04_sim_bench/README.md) ([FR5](reports/04_sim_bench/fr5/README.md) · [FR3](reports/04_sim_bench/fr3/README.md))
 > - 2026-11-10 · [보고서 3 — 실물 설정으로 다시 모은 짝 시연: 수학 모델의 확률 · 정확성, 실물 형식 변환, 실물 데이터와 비교](reports/03_realmatched_data/README.md)
 > - 2026-11-06 · [보고서 2 — 시연 100개로 학습한 GR00T: 벤치마크 결과, 수집 설정 실수와 고칠 방향](reports/02_vla100_bench/README.md)
 > - 2026-11-04 · GR00T N1.7 미세조정 (FR3 · FR5 시연 100개씩) · 처음 보는 50 장면 벤치마크
@@ -144,5 +145,6 @@ FR3 벤치는 학습 데이터와 다른 조명 상태에서 재서 다시 잽�
 |---|---|---|---|
 | 1 | 시뮬 환경 구축과 자동 시연 데이터 수집 | 2026-11-02 | [한국어](reports/01_sim_env_autodemo/README.md) · [English](reports/01_sim_env_autodemo/README_EN.md) |
 | 2 | 시연 100개로 학습한 GR00T: 벤치마크 결과, 수집 설정 실수와 고칠 방향 | 2026-11-06 | [한국어](reports/02_vla100_bench/README.md) · [English](reports/02_vla100_bench/README_EN.md) |
-| 3 | 실물 형식 재학습 · 시연 수 · 배치 비교 | 예정 | |
-| 4 | Sim-to-Real | 예정 | |
+| 3 | 실물 설정으로 다시 모은 짝 시연: 수학 모델의 확률 · 정확성, 실물 형식 변환, 실물 데이터와 비교 | 2026-11-10 | [한국어](reports/03_realmatched_data/README.md) · [English](reports/03_realmatched_data/README_EN.md) |
+| 4 | 시뮬 벤치 결과 — FR3 · FR5 VLA 단독 · DAgger · 수식 마무리 | 2026-11-16 | [통합](reports/04_sim_bench/README.md) · [FR5](reports/04_sim_bench/fr5/README.md) · [FR3](reports/04_sim_bench/fr3/README.md) · [English](reports/04_sim_bench/README_EN.md) |
+| 5 | Sim-to-Real | 예정 | |
