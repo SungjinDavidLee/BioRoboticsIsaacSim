@@ -181,7 +181,3 @@ The main bench at the time it was stopped (fixed layout, 50 scenes not in traini
 - The training recipe (frozen parts · relative actions · action chunk · base model) matches the real side and is not wrong. **Training amount at 1/4 – 1/12 of the real runs** is the largest difference.
 - The policy's failure is "finds the rack but misses by one hole". The sim is also harder than real in some ways: the demos are always perfect, so there are no scenes of recovering from an offset; layouts are widely random, so positions cannot be memorized; caps and fingers are rigid, so a finger resting on a cap stays blocked (on the real robot, compliant control absorbs a few mm).
 - Next: batch size 64 results → S0–S9 scoring → a VLA + formula bench like the real FR3 ([Report 6](../06_improve_1112_1113/README_EN.md)).
-
-## Appendix. Development notes for this period
-
-Development notes 18 (physics-jump rule) · 19 (stage diagnosis) · 20 (plan to Sunday) · 21 (cause ranking) · 22 (real ↔ sim training setup · data comparison) · 23 (stopping the main bench) · 24 (bench speed). Numbers are recounted from the bench records (`progress/bench_results.jsonl`) at the time each note was written.

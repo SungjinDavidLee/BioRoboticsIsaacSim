@@ -243,7 +243,3 @@ So **for both robots, sim policy-only success cannot stand in for real success.*
 - Training amount also grew with DAgger, so the gain cannot be attributed to DAgger alone.
 
 These results were collected into [Report 4 — sim bench results](../04_sim_bench/README_EN.md). Report 4's FR5 numbers are from the models of this period (videos squashed to 256×256 as in the real FR5 format); in the next period we changed the video format to match FR3 and measured again ([Report 9](../09_final_1116_1119/README_EN.md)).
-
-## Appendix. Development notes for this period
-
-Development note 37 (bench result summary — Sections 1–22). All numbers are real-matched sim · the same 50 scenes not in training (first try per scene · physics jump = failure). FR5 numbers use the physics with more solver iterations (solv, chosen after seeing results); FR3 uses the default sim physics.

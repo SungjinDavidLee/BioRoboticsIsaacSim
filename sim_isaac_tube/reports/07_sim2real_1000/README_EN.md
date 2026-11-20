@@ -171,7 +171,3 @@ We wrote the criteria first and ran checks that do not move the robot (FR5, basi
 3. The FR5 physics-jump fix test (decided on 11-13 but not run).
 
 Results are in [Report 8](../08_dagger_1114_1116/README_EN.md).
-
-## Appendix. Development notes for this period
-
-Development notes 34 (data shapes that are good for VLA training) · 35 (switch to sim-to-real · FR5 real-setting collection) · 36 (data composition · amount · FR3 real values — Sections 0–16) · real team answers (FR3 request 3 · answer 3). Research sources: DART (Laskey et al., CoRL 2017) · Grasping with Chopsticks (Ke et al., 2020) · Data Quality in Imitation Learning (Belkhale et al., NeurIPS 2023) · Data Scaling Laws in Imitation Learning (Lin et al., ICLR 2025) · HG-DAgger (Kelly et al., ICRA 2019) · IntervenGen (Hoque et al., IROS 2024) · RaC (Hu et al., 2025).

@@ -180,7 +180,3 @@ The fingertip path is the right panel of Figure 3.
 - **Automatic bench queue.** Models are benched as soon as they appear on the server, but only when the GPU has more than 10 GB free and fewer than 4 Isaac instances are running (pause-and-correct 600 comparison → offset-correction comparison → real-team-settings models).
 
 About an hour later this plan was replaced by the decision to "match the sim to the real settings from scratch" ([Report 7](../07_sim2real_1000/README_EN.md)).
-
-## Appendix. Development notes for this period
-
-Development notes 25 (VLA + formula · stage scoring) · 26 (overnight schedule) · 27 (physics jumps · wrist-torque test) · 28 (why success is low) · 29 (offset-and-correct demos) · 30 (overnight order) · 31 (overnight bench results) · 32 (pause-and-correct demos) · 33 (collection speed · color jitter · physics jumps · distribution). Numbers are from our first sim settings on the same 50 scenes not in training (first try per scene · physics jump = failure).
