@@ -9,6 +9,7 @@
 Paired demonstrations of the same scene (1103-27), each performed by one robot with its own workcell cameras. 1× video: [demo_pair_scene27.mp4](reports/01_sim_env_autodemo/figures/demo_pair_scene27.mp4)
 
 > **Latest news**
+> - 2026-11-20 · Progress logs (11-10 – 11-19): [Report 5 — the main bench and why we stopped it](reports/05_main_bench_stop/README_EN.md) · [Report 6 — improvement experiments](reports/06_improve_1112_1113/README_EN.md) · [Report 7 — switch to sim-to-real and the 1,000-demo dataset](reports/07_sim2real_1000/README_EN.md) · [Report 8 — FR5 nearer-tube habit · DAgger · FR3 closes too high](reports/08_dagger_1114_1116/README_EN.md) · [Report 9 — FR5 video format · DAgger again · real-like formula · weaknesses](reports/09_final_1116_1119/README_EN.md)
 > - 2026-11-16 · [Report 4 — Sim benchmark results: FR3 · FR5 VLA only · DAgger · formula finish](reports/04_sim_bench/README_EN.md) ([FR5](reports/04_sim_bench/fr5/README_EN.md) · [FR3](reports/04_sim_bench/fr3/README_EN.md))
 > - 2026-11-10 · [Report 3 — Paired demos re-collected with real-matched settings: math-model probability and precision, real-format conversion, comparison with real data](reports/03_realmatched_data/README_EN.md)
 > - 2026-11-06 · [Report 2 — GR00T trained on 100 demos: benchmark results, data-collection mistakes, and how we will fix them](reports/02_vla100_bench/README_EN.md)
@@ -42,29 +43,29 @@ Paired demonstrations of the same scene (1103-27), each performed by one robot w
 
 | Item | Sim |
 |---|---|
-| Robots | Franka FR3 + Franka Hand, FAIRINO FR5 + DH-Robotics AG-95. The TCPs of both robots use the same definition |
-| Cameras | Third-person + wrist, 640×360, 30 fps. Position · angle fitted by least-squares minimization of the reprojection error of points in the real camera images (third-person error 2–4 px). The real data is 848×480 · 10 Hz — being matched ([Report 2](reports/02_vla100_bench/README_EN.md), Sections 4 · 5) |
+| Robots | Franka FR3 + Franka Hand (the sim model is Isaac's default Panda), FAIRINO FR5 + DH-Robotics AG-95. The TCPs of both robots use the same definition |
+| Cameras | Third-person + wrist, 848×480 · 10 Hz (real format). **Real-matched sim (from Nov 13):** FR3 re-solved from the robot PC's camera calibration — 0.52 px mean against the real model; FR5 uses the settings matched by the real team ([Report 7](reports/07_sim2real_1000/README_EN.md)) |
 | Objects | 50 mL tube built from measurements (48 mL water, 51 g) · 4-hole rack (165×40×51 mm) · red ring (STL of the real part) |
-| Workcells | Table · pedestal · wall · start pose reproduced separately for each of the FR3 and FR5 workcells |
-| Software | Isaac Sim 6.0.1, Isaac Lab 3.0 (v3.0.0-beta2.patch1) |
+| Workcells | Table · pedestal · wall reproduced separately for the FR3 and FR5 workcells. Base height · start pose · scene color · per-camera white balance set to the real values (FR3 base lowered 23.5 mm → grasp height within 0.3 mm of the real one) |
+| Sim vs. real | FR5 has a sim assist that attaches the tube to the hand while held (not on the real robot), and the sim FR3 arm is stiffer than the real impedance control — sim success does not stand in for real success ([Report 8](reports/08_dagger_1114_1116/README_EN.md), Section 6) |
+| Software | Isaac Sim 6.0.1, Isaac Lab 3.0 (v3.0.0-beta2.patch1), GR00T N1.7 |
 
 ## 4. Progress (updated)
 
-![Overall pipeline and progress](figures/pipeline_en.png)
+![Overall pipeline (figure as of Nov 6)](figures/pipeline_en.png)
+
+The figure is as of Nov 6. The current state is in the table below (2026-11-20).
 
 | Stage | Status | Period |
 |---|---|---|
-| Measured assets (tube · rack · ring) | ✅ Done | Oct 26 – Nov 2 |
-| Digital twin (FR3 · FR5 workcells) | ✅ Done | Oct 27 – Oct 29 |
-| Isaac Lab domain randomization | ✅ Done | Oct 28 – Oct 31 |
-| Scripted demo collector | ✅ Done | Oct 31 – Nov 2 |
-| 100 FR3 · FR5 paired demonstrations | ✅ Done | Nov 2 – Nov 3 |
-| GR00T N1.7 fine-tuning (100 demos) · sim benchmark | ✅ Done — [Report 2](reports/02_vla100_bench/README_EN.md) | Nov 3 – Nov 5 |
-| GR00T N1.7 zero-shot (sim) | 🔄 2-scene trial only | Nov 3 |
-| More collection (200 A pairs · 300 B pairs) | 🔄 In progress (FR5 following B) | Nov 3 – |
-| Matching the real format (10 Hz · 848×480 · state · action definitions · exposure) · fixing the dome light | 🔄 In progress | Nov 5 – |
-| Retraining with format · number of demos · layout changed · per-robot comparison | 🔄 Two FR5 runs training | Nov 6 – |
-| Re-collection with the real settings (ab) | ⬜ Planned | |
+| Measured assets (tube · rack · ring) · digital twin (FR3 · FR5 workcells) | ✅ Done | Oct 26 – Nov 2 |
+| Isaac Lab domain randomization · scripted demo collector | ✅ Done | Oct 28 – Nov 2 |
+| 100 paired demos · GR00T N1.7 fine-tuning · first benchmark | ✅ Done — [Report 2](reports/02_vla100_bench/README_EN.md) | Nov 2 – Nov 5 |
+| Matching the real format (10 Hz · 848×480 · state · action definitions · exposure) · paired demos with the real settings | ✅ Done — [Report 3](reports/03_realmatched_data/README_EN.md) | Nov 5 – Nov 10 |
+| Main bench · physics-jump rule · stage diagnosis · training amount (batch size 64) | ✅ Done — [Report 5](reports/05_main_bench_stop/README_EN.md) · [6](reports/06_improve_1112_1113/README_EN.md) | Nov 10 – Nov 13 |
+| Real-matched sim (cameras · base height · start pose · color) · 1,000 demos per robot | ✅ Done — [Report 7](reports/07_sim2real_1000/README_EN.md) | Nov 13 – Nov 14 |
+| VLA + formula · S0–S9 stage scoring · DAgger · FR5 video format unified | ✅ Done — [Report 4](reports/04_sim_bench/README_EN.md) · [8](reports/08_dagger_1114_1116/README_EN.md) · [9](reports/09_final_1116_1119/README_EN.md) | Nov 12 – Nov 19 |
+| Real-like formula check · S0–S9 comparison with the real FR5 evaluation | 🔄 Continues after the exam period | Nov 19 – |
 | Real-world deployment (Sim-to-Real) | ⬜ Planned | |
 
 ## 5. Simulation environment
@@ -106,38 +107,52 @@ The equations used and how they are applied are collected in Report 1, [Section 
 
 | Item | Value |
 |---|---|
-| Format | LeRobot v2 (GR00T format) |
-| Video | Third-person · wrist, 640×360, 30 fps |
-| State · action | TCP position 3 + orientation rot6d 6 + gripper 1 + joints (FR3 7 · FR5 6) |
+| Format | LeRobot v2.1 (GR00T format) — converted per robot to the same format as the real training data (`tools/common_to_real.py`, [Report 3](reports/03_realmatched_data/README_EN.md)) |
+| Video | Third-person · wrist, 848×480, 10 Hz, first-frame brightness matched to the real target per demo (model input 452×256 with the aspect ratio kept) |
+| State · action | Real definitions per robot — FR3 TCP xyz + rot6d + finger width, FR5 TCP xyz + rot6d + gripper half-width. Actions are relative TCP motion + gripper |
 | Instruction | `put the red tube in the red slot` |
-| Pairing | The same scene (layout · lighting) is performed by FR3 and FR5 separately and linked by `pair_id` |
+| Current training data (per robot) | 1,000 real-matched sim demos + DAgger segments (FR5 597 · FR3 449, from 300 runs each) |
 
-First 100 pairs (Nov 2 – 3, base seed 1103, layout A):
+Composition of the 1,000 demos per robot (Nov 13 – 14, [Report 7](reports/07_sim2real_1000/README_EN.md)):
 
-| | Saved | Discarded · given up | Success rate (per attempt) | Demo length (sim) |
-|---|---|---|---|---|
-| FR3 | 100 | 16 discarded · 2 given up | 86 % | about 41 s |
-| FR5 | 100 | 1 discarded · 0 given up | 99 % (in-hand hold assist) | about 41 s |
-| Pair (both saved) | 99 | — | — | — |
+| Branch | Demos | Motion | Part used for training |
+|---|---|---|---|
+| ① Basic | 150 | Same motion as the real scripted collector, without mistakes | All |
+| ② Pause-correct | 300 | Stop above a guessed position → correct 1–8 mm sideways → descend | All |
+| ③ Offset + correction | 250 | Stop above a position 10–40 mm off → correct while descending | From the offset position |
+| ④ Retry after failure | 150 | Empty grasp → grasp again; insertion jams → insert again | From the failed state |
+| ⑤ Real-data gaps | 150 | ② · ③ motions in far areas and widely varied layouts missing from the real data | Same as ② · ③ |
 
-Since then we collected 200 more A pairs · 300 B pairs (FR5 still following B). The settings that differ from the real robots (30 Hz · 640×360 · state · action definitions · exposure) and the dome light that changed with each collector run are being fixed by conversion and re-collection — [Report 2](reports/02_vla100_bench/README_EN.md), Sections 4 · 5.
+The first paired demos (Nov 2 – 5, 640×360 · 30 Hz) are in [Report 1](reports/01_sim_env_autodemo/README_EN.md) · [2](reports/02_vla100_bench/README_EN.md), and the paired demos re-collected with the real settings in [Report 3](reports/03_realmatched_data/README_EN.md).
 
-## 7. Model and experiment plan
+## 7. Model · training · evaluation
 
-- **Model:** [GR00T N1.7](https://github.com/NVIDIA/Isaac-GR00T) base model (`nvidia/GR00T-N1.7-3B`, `NEW_EMBODIMENT`) — fine-tuned per robot
-- **Input · output:** 2 cameras + TCP state + gripper → relative TCP motion + gripper, in chunks of 16 steps (current data 30 Hz → 0.53 s, real format 10 Hz → 1.6 s)
-- **Evaluation:** the same 50 scenes not used for training (base seed 7700) · 10 training scenes, first attempt only, 95 % CI with every success rate. Same number of trials and the same lighting state for every model compared
-- **Order:** ① fine-tuning on 100 demos · benchmark (done) → ② retraining with format · number of demos · layout changed one at a time (in progress) → ③ per-robot comparison on data with the real settings (ab) → ④ real-world deployment
+- **Model:** [GR00T N1.7](https://github.com/NVIDIA/Isaac-GR00T) base model (`nvidia/GR00T-N1.7-3B`, `NEW_EMBODIMENT`) — fine-tuned per robot (vision-language backbone frozen, action part trained)
+- **Input · output:** 2 cameras + TCP state + gripper → relative TCP motion + gripper, action chunk of 16 steps (10 Hz → 1.6 s)
+- **Training:** batch size 64 × 20,000 updates (1.28 M samples; FR3 accumulates two passes of 32 per update), color jitter on — the same training config file for both robots
+- **Evaluation:** the same 50 scenes not used in training — fixed and random layouts (FR3 also the real-eval layouts), first try per scene, physics jump = failure, S0–S9 stage scoring as on the real robots. Criteria are fixed before looking at results
+- **Two executions reported separately:** policy only · VLA + formula (the policy chooses the target; only the final grasp and insertion are handed to the scripted-demo formula)
+- **DAgger:** run the policy in 300 scenes not used in training, add only the segments where the formula corrected it from where it went off target, and retrain from scratch
+- **Next (after the exam period):** check a formula under real-robot conditions (finds targets with the camera) → compare with the real FR5 evaluation using S0–S9 → one next experiment (DAgger round 2 · a simpler FR5 gripper model · the yellow-ring task · reinforcement-learning fine-tuning · GR00T N2)
 
 ## 8. Results (updated)
 
-| | Training demos | Success on 50 unseen scenes | 95 % CI |
-|---|---|---|---|
-| FR3 | 100 | 2 / 50 (4 %) | 1.1–13.5 % |
-| FR5 | 100 | 1 / 50 (2 %) | 0.4–10.5 % |
+Success rates on the real-matched sim · the same 50 scenes not used in training · first try per scene (physics jump = failure), as of 2026-11-19 ([Report 9](reports/09_final_1116_1119/README_EN.md)).
 
-Real-robot models trained on 100 demos are similar (FR3 5 % · FR5 0 %; the real 200-demo model reaches 30 %). We suspect layout memorization instead of color, grasp precision, and a short action chunk.
-The FR3 benchmark was run under a lighting state different from its training data and will be re-measured. Details in [Report 2](reports/02_vla100_bench/README_EN.md).
+| Robot · model | Policy only · fixed | Policy only · random | VLA + formula · fixed | VLA + formula · random |
+|---|---|---|---|---|
+| FR5 · 1,000 | 62 % | 40 % | 88 % | 96 % |
+| FR5 · 1,000 + DAgger | 68 % | 74 % | 94 % | 98 % |
+| FR3 · 1,000 | 4 % | 4 % | 98 % | 78 % |
+| FR3 · 1,000 + DAgger | 62 % | 34 % | 100 % | 90 % |
+
+<img src="reports/09_final_1116_1119/figures/fig9_final_pairs_en.png" alt="Final numbers — policy only (open dot) and VLA + formula (filled dot)" width="680">
+
+- **Policy only:** GR00T N1.7 picks and inserts on its own. Converting the FR5 training videos the same way as FR3 (848×480 → 452×256 with the aspect ratio kept) took FR5 from 16 to 62 % on the fixed layout, and **DAgger** (retraining with only the segments where the formula corrected the policy from where it actually went wrong) raised both robots a lot — it fixed FR5's "goes to the nearer tube" habit and FR3's "closes about 6 mm too high".
+- **VLA + formula:** the policy chooses the tube and slot, and the scripted-demo formula takes over only the final grasp and insertion once the policy comes within 25 mm of a cap or the red slot (same structure as the real FR3 station). The formula never changes the tube the policy chose.
+- On the FR3 real-eval layouts (10 layouts × 5 lightings): 1,000 model 6 % → DAgger 28 % (VLA + formula 64 → 86 %).
+
+**Read with care.** Sim success is not a prediction of real success; it is a tool for comparing models within the same sim and the same physics. FR5 sim success relies on a grasp assist the real robot does not have (attach while held), and FR3 sim (Isaac's default Panda model) has no such assist. The fixed layout is in effect two layouts × 25 scenes, so performance at unseen positions is read from the random layout. Details in [Report 4](reports/04_sim_bench/README_EN.md) and progress logs [5](reports/05_main_bench_stop/README_EN.md) – [9](reports/09_final_1116_1119/README_EN.md).
 
 ## 9. Reports
 
@@ -147,4 +162,9 @@ The FR3 benchmark was run under a lighting state different from its training dat
 | 2 | GR00T trained on 100 demos: benchmark results, data-collection mistakes, and how we will fix them | 2026-11-06 | [한국어](reports/02_vla100_bench/README.md) · [English](reports/02_vla100_bench/README_EN.md) |
 | 3 | Paired demos re-collected with real-matched settings: math-model probability and precision, real-format conversion, comparison with real data | 2026-11-10 | [한국어](reports/03_realmatched_data/README.md) · [English](reports/03_realmatched_data/README_EN.md) |
 | 4 | Sim benchmark results — FR3 · FR5 VLA only · DAgger · formula finish | 2026-11-16 | [Overview](reports/04_sim_bench/README_EN.md) · [FR5](reports/04_sim_bench/fr5/README_EN.md) · [FR3](reports/04_sim_bench/fr3/README_EN.md) · [한국어](reports/04_sim_bench/README.md) |
-| 5 | Sim-to-Real | Planned | |
+| 5 | Progress log — the main bench and why we stopped it: physics-jump rule · stage diagnosis · training amount | 2026-11-10 – 12 | [English](reports/05_main_bench_stop/README_EN.md) · [한국어](reports/05_main_bench_stop/README.md) |
+| 6 | Progress log — improvement experiments: VLA + formula bench · offset-and-correct demos | 2026-11-12 – 13 | [English](reports/06_improve_1112_1113/README_EN.md) · [한국어](reports/06_improve_1112_1113/README.md) |
+| 7 | Progress log — switch to sim-to-real and the 1,000-demo dataset | 2026-11-13 – 14 | [English](reports/07_sim2real_1000/README_EN.md) · [한국어](reports/07_sim2real_1000/README.md) |
+| 8 | Progress log — FR5 nearer-tube habit · DAgger · FR3 closes too high | 2026-11-14 – 16 | [English](reports/08_dagger_1114_1116/README_EN.md) · [한국어](reports/08_dagger_1114_1116/README.md) |
+| 9 | Progress log — FR5 video format · DAgger again · real-like formula · weaknesses | 2026-11-16 – 19 | [English](reports/09_final_1116_1119/README_EN.md) · [한국어](reports/09_final_1116_1119/README.md) |
+| 10 | Sim-to-Real | Planned | |
